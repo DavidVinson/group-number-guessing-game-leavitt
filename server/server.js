@@ -1,5 +1,7 @@
 const express = require("express");
-const { randomNumber, myList } = require("./random.js");
+const randomNumber = require("./random.js");
+const dataArray = require("./data-stuff.js");
+
 const app = express();
 const PORT = 5000;
 
@@ -9,14 +11,15 @@ app.use(express.json());
 
 let randomNum = randomNumber();
 let newColor = "yellow";
-myList.push(newColor);
-console.log(randomNum, myList[randomNum]);
+dataArray.push(newColor);
+console.log(randomNum, dataArray[randomNum]);
 
 // Serve up static files (HTML, CSS, Client JS)
 app.use(express.static("server/public"));
 app.use(express.json());
 
 // GET & POST Routes go here
+app.get("/stuff", (req, res) => res.status(200).send(dataArray));
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
